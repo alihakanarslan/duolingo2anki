@@ -3,6 +3,7 @@ from json import dumps
 from duolingo import Duolingo
 from requests import get, post
 from selectolax.parser import HTMLParser
+from deep_translator import GoogleTranslator
 
 USERNAME = ''
 PASSWORD = ''
@@ -44,6 +45,7 @@ def main():
 
     log('Getting meanings and spellings...')
     vocabulary = []
+    gt = GoogleTranslator(source=TARGET_LANGUAGE, target=MAIN_LANGUAGE)
     for li in lis:
         if (info := li.css_first('.wA')).text() in words:
             title = info.attributes['title']
@@ -52,7 +54,7 @@ def main():
                 {
                     'word': info.text().strip(),
                     'spelling': spelling[1:].strip(),
-                    'meaning': meaning.strip()
+                    'meaning': meaning.strip() if len(meaning.strip()) > 0 else gt.translate(info.text().strip())
                 }
             )
 

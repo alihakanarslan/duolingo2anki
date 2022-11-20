@@ -1,3 +1,4 @@
+deep-translator>=1.9.1
 duolingo-api>=0.5.4
 requests>=2.28.1
 selectolax>=0.3.11
